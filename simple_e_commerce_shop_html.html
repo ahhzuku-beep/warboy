@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simple E‑commerce Shop</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f6f6f6;
+      color: #222;
+    }
+    header {
+      background: #000;
+      color: #fff;
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header h1 { margin: 0; font-size: 20px; }
+    .cart-btn {
+      background: #fff;
+      color: #000;
+      border: none;
+      padding: 8px 14px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    main {
+      padding: 24px;
+      max-width: 1200px;
+      margin: auto;
+    }
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    .product {
+      background: #fff;
+      padding: 16px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+      display: flex;
+      flex-direction: column;
+    }
+    .product img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 6px;
+      margin-bottom: 12px;
+    }
+    .product h3 {
+      margin: 0 0 8px;
+    }
+    .product p {
+      font-size: 14px;
+      flex-grow: 1;
+    }
+    .price {
+      font-weight: bold;
+      margin: 8px 0;
+    }
+    .product button {
+      background: #000;
+      color: #fff;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    .product button:hover { opacity: 0.85; }
+
+    /* Cart modal */
+    .cart {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 350px;
+      height: 100%;
+      background: #fff;
+      box-shadow: -4px 0 12px rgba(0,0,0,0.15);
+      padding: 20px;
+      transition: right 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      z-index: 1000;
+    }
+    .cart.open { right: 0; }
+    .cart h2 { margin-top: 0; }
+    .cart-items { flex-grow: 1; overflow-y: auto; }
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+    .cart-total {
+      font-weight: bold;
+      margin: 12px 0;
+    }
+    .checkout {
+      background: #000;
+      color: #fff;
+      border: none;
+      padding: 12px;
+      cursor: pointer;
+      width: 100%;
+    }
+    .close-cart {
+      background: none;
+      border: none;
+      font-size: 14px;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+      color: #777;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>My Shop</h1>
+  <button class="cart-btn" onclick="toggleCart()">Cart (<span id="cart-count">0</span>)</button>
+</header>
+
+<main>
+  <div class="products">
+    <div class="product">
+      <img src="https://via.placeholder.com/400x300" alt="Product 1">
+      <h3>Product One</h3>
+      <p>High quality product description goes here.</p>
+      <div class="price">€29.99</div>
+      <button onclick="addToCart('Product One', 29.99)">Add to Cart</button>
+    </div>
+
+    <div class="product">
+      <img src="https://via.placeholder.com/400x300" alt="Product 2">
+      <h3>Product Two</h3>
+      <p>Another great product for your customers.</p>
+      <div class="price">€49.99</div>
+      <button onclick="addToCart('Product Two', 49.99)">Add to Cart</button>
+    </div>
+
+    <div class="product">
+      <img src="https://via.placeholder.com/400x300" alt="Product 3">
+      <h3>Product Three</h3>
+      <p>Popular item with excellent reviews.</p>
+      <div class="price">€19.99</div>
+      <button onclick="addToCart('Product Three', 19.99)">Add to Cart</button>
+    </div>
+  </div>
+</main>
+
+<div class="cart" id="cart">
+  <button class="close-cart" onclick="toggleCart()">Close</button>
+  <h2>Your Cart</h2>
+  <div class="cart-items" id="cart-items"></div>
+  <div class="cart-total">Total: €<span id="cart-total">0.00</span></div>
+  <button class="checkout" onclick="checkout()">Checkout</button>
+</div>
+
+<footer>
+  © 2025 My Shop – All rights reserved
+</footer>
+
+<script>
+  let cart = [];
+
+  function addToCart(name, price) {
+    cart.push({ name, price });
+    updateCart();
+  }
+
+  function updateCart() {
+    const cartItems = document.getElementById('cart-items');
+    const cartCount = document.getElementById('cart-count');
+    const cartTotal = document.getElementById('cart-total');
+
+    cartItems.innerHTML = '';
+    let total = 0;
+
+    cart.forEach((item, index) => {
+      total += item.price;
+      const div = document.createElement('div');
+      div.className = 'cart-item';
+      div.innerHTML = `${item.name} - €${item.price.toFixed(2)}`;
+      cartItems.appendChild(div);
+    });
+
+    cartCount.textContent = cart.length;
+    cartTotal.textContent = total.toFixed(2);
+  }
+
+  function toggleCart() {
+    document.getElementById('cart').classList.toggle('open');
+  }
+
+  function checkout() {
+    alert('Checkout complete! (Connect Stripe/PayPal here)');
+    cart = [];
+    updateCart();
+    toggleCart();
+  }
+</script>
+
+</body>
+</html>
