@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Contact</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div id="visitor-counter" class="visitor-counter" aria-live="polite"><span class="live-dot"></span>422 Live shopping carts</div>
+  <div class="minimal-wrap">
+    <video class="form-logo-img" autoplay muted loop playsinline preload="auto">
+      <source src="/resources/logovideo.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <h1 class="lead">Sign up for the drop</h1>
+    <p class="subtle">Be the first to know when the brand drops — we’ll send an email only if you opt in.</p>
+    <form id="contact" method="post" action="/submit" novalidate>
+      <input type="text" name="name" id="name" placeholder="Full name" required maxlength="100" />
+      <input type="email" name="email" id="email" placeholder="Email address" required maxlength="254" />
+      <div class="consent-wrap">
+        <label><input type="checkbox" name="consent" /> Notify me when it drops</label>
+      </div>
+      <button type="submit" class="btn">Join list</button>
+      <div id="status" role="status" aria-live="polite" class="status"></div>
+    </form>
+  </div>
+
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+  <script src="/script.js"></script>
+</body>
+</html>

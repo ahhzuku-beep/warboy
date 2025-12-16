@@ -1,0 +1,14 @@
+{
+  "test2@example.com": {
+    "name": "Test User 2",
+    "email": "test2@example.com",
+    "consent": true,
+    "time": "2025-12-16T06:26:37.662Z"
+  },
+  "nigga@email.jews": {
+    "name": "nigga name",
+    "email": "nigga@email.jews",
+    "consent": true,
+    "time": "2025-12-16T06:42:08.566Z"
+  }
+}
